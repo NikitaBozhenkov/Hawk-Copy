@@ -21,7 +21,7 @@ public class Boundaries : MonoBehaviour
         screenBounds = MainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, MainCamera.transform.position.z));
     }
 
-    void FixedUpdate() {
+    void LateUpdate() {
         var rot = Mathf.Deg2Rad * MainCamera.transform.rotation.eulerAngles.x;
         var h = MainCamera.transform.position.y - transform.position.y;
         var size = MainCamera.orthographicSize * 2;
