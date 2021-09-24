@@ -31,7 +31,7 @@ public class Boundaries : MonoBehaviour
         Vector3 viewPos = transform.position;
 
         viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x - screenSize.x * 2 + objectWidth, screenBounds.x - objectWidth);
-        viewPos.z = Mathf.Clamp(viewPos.z, lowBnd + objectWidth, upBnd - objectHeight);
+        viewPos.z = Mathf.Clamp(viewPos.z, lowBnd + objectHeight, upBnd - objectHeight);
         transform.position = viewPos;
     }
 }
