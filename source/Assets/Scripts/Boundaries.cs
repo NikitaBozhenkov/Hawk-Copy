@@ -4,34 +4,69 @@ using UnityEngine;
 
 public class Boundaries : MonoBehaviour
 {
-    public Camera MainCamera;
-    private Vector2 screenBounds;
-    private float objectWidth;
-    private float objectHeight;
-    private Vector2 screenSize;
+    [SerializeField] private Camera _mainCamera;
+    private Transform _mainCameraTransform;
+    private float _cameraRotation;
+    private float _boundariesDistanceFromCamera;
+    private float _cameraSize;
 
-    private float lowBnd;
-    private float upBnd;
+    private float _screenBoundX;
+    private float _screenSizeX;
 
-    void Start() {
-        objectWidth = transform.GetComponent<MeshRenderer>().bounds.extents.x;
-        objectHeight = transform.GetComponent<MeshRenderer>().bounds.extents.z;
-        screenSize.x = Vector2.Distance(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)), Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0))) * 0.5f;
+    private float _objectWidth;
+    private float _objectHeight;
+    
+    private float _lowerBound;
+    private float _upperBound;
 
-        screenBounds = MainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, MainCamera.transform.position.z));
+    private Transform _objectTransform;
+
+    private void Start()
+    {
+        CacheValues();
+        CalculateScreenBounds();
     }
 
-    void LateUpdate() {
-        var rot = Mathf.Deg2Rad * MainCamera.transform.rotation.eulerAngles.x;
-        var h = MainCamera.transform.position.y - transform.position.y;
-        var size = MainCamera.orthographicSize * 2;
-        lowBnd = (h - Mathf.Cos(rot) * size / 2f) / Mathf.Tan(rot) - (Mathf.Sin(rot) * size / 2f);
-        lowBnd += MainCamera.transform.position.z;
-        upBnd = lowBnd + size / Mathf.Sin(rot);
-        Vector3 viewPos = transform.position;
+    private void LateUpdate()
+    {
+        Bound();
+    }
 
-        viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x - screenSize.x * 2 + objectWidth, screenBounds.x - objectWidth);
-        viewPos.z = Mathf.Clamp(viewPos.z, lowBnd + objectHeight, upBnd - objectHeight);
-        transform.position = viewPos;
+    private void CalculateScreenBounds() {
+        _screenSizeX = Vector2.Distance(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)),
+            Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0))) * 0.5f;
+        _screenBoundX =
+            _mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _mainCamera.transform.position.z)).x;
+        _cameraRotation = Mathf.Deg2Rad * _mainCamera.transform.rotation.eulerAngles.x;
+        _boundariesDistanceFromCamera = _mainCamera.transform.position.y - transform.position.y;
+        _cameraSize = _mainCamera.orthographicSize * 2;
+        _lowerBound =
+            (_boundariesDistanceFromCamera - Mathf.Cos(_cameraRotation) * _cameraSize / 2f) / Mathf.Tan(_cameraRotation) -
+            (Mathf.Sin(_cameraRotation) * _cameraSize / 2f);
+        _upperBound = _lowerBound + _cameraSize / Mathf.Sin(_cameraRotation);
+    }
+
+    private void CacheValues() {
+        _objectWidth = transform.GetComponent<MeshRenderer>().bounds.extents.x;
+        _objectHeight = transform.GetComponent<MeshRenderer>().bounds.extents.z;
+        _mainCameraTransform = _mainCamera.transform;
+        _objectTransform = transform;
+    }
+
+    private void Bound() {
+        float tempLower = _lowerBound;
+        float tempUpper = _upperBound;
+
+        float cameraOffset = _mainCameraTransform.position.z;
+        _lowerBound += cameraOffset;
+        _upperBound += cameraOffset;
+
+        Vector3 viewPos = _objectTransform.position;
+        viewPos.x = Mathf.Clamp(viewPos.x, _screenBoundX - _screenSizeX * 2 + _objectWidth, _screenBoundX - _objectWidth);
+        viewPos.z = Mathf.Clamp(viewPos.z, _lowerBound + _objectHeight, _upperBound - _objectHeight);
+        _objectTransform.position = viewPos;
+
+        _lowerBound = tempLower;
+        _upperBound = tempUpper;
     }
 }
