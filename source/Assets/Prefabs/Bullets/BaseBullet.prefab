@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2192005490873823235}
   - component: {fileID: 5299615670482752333}
   - component: {fileID: -3187519182013889366}
-  - component: {fileID: 403835127688907071}
+  - component: {fileID: 7449604391622392794}
   m_Layer: 0
   m_Name: BaseBullet
   m_TagString: Untagged
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
---- !u!114 &403835127688907071
+--- !u!114 &7449604391622392794
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,6 +116,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5770115583722095415}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0cf71e645d21f74c852fefe471ee341, type: 3}
+  m_Script: {fileID: 11500000, guid: 881034e8530574b4ca88fec062649bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
+  _speed: 0

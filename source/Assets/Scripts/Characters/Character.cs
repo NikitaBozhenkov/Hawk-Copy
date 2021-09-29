@@ -5,7 +5,7 @@ public class Character : MonoBehaviour
 {
     [SerializeField] private Gun[] guns;
     [SerializeField] private float shotsPerSecond;
-    [SerializeField] private int framesPerShot;
+    private int framesPerShot;
     private int counter;
 
     private Action shoot;
