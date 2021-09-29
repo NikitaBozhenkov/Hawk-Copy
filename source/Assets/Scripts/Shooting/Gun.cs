@@ -1,16 +1,29 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Gun : MonoBehaviour
 {
+    [Header("Bullets Settings")]
+    [SerializeField] private Transform _bulletStartPosition;
+    [SerializeField] private Bullet[] _bulletPrefabs;
+
     public void Setup(ref Action shootAction)
     {
         shootAction += Shoot;
     }
 
+    protected virtual Bullet ChooseBullet()
+    {
+        return _bulletPrefabs[Random.Range(0, _bulletPrefabs.Length)];
+    }
+
     protected virtual void Shoot()
     {
-        print("shot!");
+        Bullet bulletToShootPrefab = ChooseBullet();
+        Bullet shotBullet = Instantiate(bulletToShootPrefab, _bulletStartPosition.position, _bulletStartPosition.rotation);
+        StartCoroutine(shotBullet.OnShot());
     }
 }

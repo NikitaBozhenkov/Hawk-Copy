@@ -120,7 +120,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &37927071
+--- !u!1 &243381105
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,17 +128,19 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 37927073}
-  - component: {fileID: 37927072}
+  - component: {fileID: 243381109}
+  - component: {fileID: 243381108}
+  - component: {fileID: 243381107}
+  - component: {fileID: 243381106}
   m_Layer: 0
-  m_Name: Meta
+  m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &37927072
-MonoBehaviour:
+--- !u!64 &243381106
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -468,7 +470,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1504962728}
+  - component: {fileID: 1422478551}
+  - component: {fileID: 1422478550}
+  - component: {fileID: 1422478549}
+  - component: {fileID: 1422478548}
+  - component: {fileID: 1422478552}
+  - component: {fileID: 1422478553}
+  - component: {fileID: 1422478554}
   m_Layer: 0
   m_Name: PlayerRoot
   m_TagString: Untagged
