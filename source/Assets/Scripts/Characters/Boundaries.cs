@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boundaries : MonoBehaviour
 {
-    [SerializeField] private Camera _mainCamera;
+    private Camera _mainCamera;
     private Transform _mainCameraTransform;
     private float _cameraRotation;
     private float _boundariesDistanceFromCamera;
@@ -21,8 +21,9 @@ public class Boundaries : MonoBehaviour
 
     private Transform _objectTransform;
 
-    private void Start()
+    public void Setup(Camera mainCamera)
     {
+        _mainCamera = mainCamera;
         CacheValues();
         CalculateScreenBounds();
     }
