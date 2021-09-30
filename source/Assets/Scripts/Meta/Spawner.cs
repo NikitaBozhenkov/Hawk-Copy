@@ -4,13 +4,15 @@ using Object = UnityEngine.Object;
 
 public class Spawner
 {
+    private Transform chunksRoot;
     private Vector3 currentChunkSpawnPosition;
-    private Vector3 playerSpawnPosition;
+    private Transform playerRoot;
 
     public Spawner(Transform chunksRoot, Transform playerRoot, ref Action<GameStatus> gameStatusChanged)
     {
+        this.chunksRoot = chunksRoot;
         currentChunkSpawnPosition = chunksRoot.position;
-        playerSpawnPosition = playerRoot.position;
+        this.playerRoot = playerRoot;
         gameStatusChanged += OnGameStatusChanged;
     }
 
@@ -33,11 +35,15 @@ public class Spawner
     {
         Chunk[] spawnedChunks = new Chunk[chunksCount];
 
-        for(int i = 0; i < chunksCount; ++i) {
-            Chunk chunk = chunkPrefabs[i % chunkPrefabs.Length];
-            Object.Instantiate(chunk, currentChunkSpawnPosition, chunk.transform.rotation);
-            currentChunkSpawnPosition.z += chunk.GetComponent<MeshRenderer>().bounds.size.z;
-            spawnedChunks[i] = chunk;
+        for (int i = 0; i < chunksCount; ++i)
+        {
+            Chunk chunkToSpawn = chunkPrefabs[i % chunkPrefabs.Length];
+            Chunk spawnedChunk = Object.Instantiate(chunkToSpawn,
+                currentChunkSpawnPosition,
+                chunkToSpawn.transform.rotation);
+            spawnedChunk.transform.SetParent(chunksRoot);
+            currentChunkSpawnPosition.z += spawnedChunk.GetComponent<MeshRenderer>().bounds.size.z;
+            spawnedChunks[i] = spawnedChunk;
         }
 
         return spawnedChunks;
@@ -46,7 +52,7 @@ public class Spawner
     public Character SpawnPlayer(Character playerPrefab)
     {
         Character player = Object.Instantiate(playerPrefab);
-        player.transform.position = playerSpawnPosition;
+        player.transform.SetParent(playerRoot);
         return player;
     }
 }

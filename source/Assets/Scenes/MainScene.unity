@@ -469,7 +469,7 @@ MonoBehaviour:
   playerRoot: {fileID: 1047644576}
   startChunkPrefabs:
   - {fileID: 8003657446227024581, guid: 99cfc2a647c175947915d88c26ec3b61, type: 3}
-  startChunksCount: 2
+  startChunksCount: 1
   enemyChunkPrefabs:
   - {fileID: 6539555305346232606, guid: ae8c3a723a7914c4a83c89cc97095429, type: 3}
   - {fileID: 6539555305346232606, guid: 375169146426e964986e9721720b8b15, type: 3}

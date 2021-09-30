@@ -35,6 +35,7 @@ public class Meta : MonoBehaviour
         spawner = new Spawner(chunksRoot, playerRoot, ref gameStatusChanged);
         MakeSpawns();
         SetupPlayer();
+        SetupChunks();
     }
 
     private void MakeSpawns()
@@ -48,5 +49,13 @@ public class Meta : MonoBehaviour
     {
         player.GetComponent<Boundaries>().Setup(mainCamera);
         player.Setup();
+    }
+
+    private void SetupChunks()
+    {
+        foreach (Chunk chunk in chunks)
+        {
+            chunk.Setup();
+        }
     }
 }

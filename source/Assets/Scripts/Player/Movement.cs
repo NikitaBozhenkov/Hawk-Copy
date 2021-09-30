@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _speedModifier;
 
     private void FixedUpdate()
-    {
+    {   
         ProcessTouches(InputHelper.GetTouches());
         transform.Translate(0, 0, _speed * Time.deltaTime);
     }
