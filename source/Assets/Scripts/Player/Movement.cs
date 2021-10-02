@@ -1,35 +1,39 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tools;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+namespace Player
 {
-    private Touch _touch;
-
-    [SerializeField] private float _speed;
-    [SerializeField] private float _speedModifier;
-
-    private void FixedUpdate()
-    {   
-        ProcessTouches(InputHelper.GetTouches());
-        transform.Translate(0, 0, _speed * Time.deltaTime);
-    }
-
-    private void ProcessTouches(List<Touch> touches)
+    public class Movement : MonoBehaviour
     {
-        if (touches.Count == 0) return;
-        _touch = touches[0];
+        private Touch _touch;
 
-        Move(_touch.deltaPosition * _speedModifier);
+        [SerializeField] private float _speed;
+        [SerializeField] private float _speedModifier;
+
+        private void FixedUpdate()
+        {   
+            ProcessTouches(InputHelper.GetTouches());
+            transform.Translate(0, 0, _speed * Time.deltaTime);
+        }
+
+        private void ProcessTouches(List<Touch> touches)
+        {
+            if (touches.Count == 0) return;
+            _touch = touches[0];
+
+            Move(_touch.deltaPosition * _speedModifier);
+        }
+
+        private void Move(Vector2 additionalPosition)
+        {
+            Vector3 newPosition = transform.position;
+            newPosition.x += additionalPosition.x;
+            newPosition.z += additionalPosition.y;
+            transform.position = newPosition;
+        }
+
     }
-
-    private void Move(Vector2 additionalPosition)
-    {
-        Vector3 newPosition = transform.position;
-        newPosition.x += additionalPosition.x;
-        newPosition.z += additionalPosition.y;
-        transform.position = newPosition;
-    }
-
 }

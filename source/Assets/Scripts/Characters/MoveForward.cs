@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MoveForward : MonoBehaviour
+namespace Characters
 {
-    [SerializeField] private float _speed;
-
-    private void FixedUpdate()
+    public class MoveForward : MonoBehaviour
     {
-        transform.Translate(0, 0, _speed * Time.deltaTime, Space.World);
+        [SerializeField] private float _speed;
+
+        private void FixedUpdate()
+        {
+            transform.Translate(0, 0, _speed * Time.deltaTime, Space.World);
+        }
     }
 }

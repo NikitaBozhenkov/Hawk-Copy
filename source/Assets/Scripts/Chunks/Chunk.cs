@@ -1,14 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using Characters;
+using UnityEngine;
 
-public class Chunk : MonoBehaviour
+namespace Chunks
 {
-    [SerializeField] private Character[] enemies;
-
-    public void Setup()
+    public class Chunk : MonoBehaviour
     {
-        foreach (Character enemy in enemies)
+        [SerializeField] private Character[] enemies;
+
+        public event Action onTrigger;
+
+        public void Setup()
         {
-            enemy.Setup();
+            foreach (Character enemy in enemies)
+            {
+                enemy.Setup();
+            }
+        }
+
+        private void OnTriggerEnter(Collider other) {
+            if(other.gameObject.CompareTag("Disable")) {
+                onTrigger?.Invoke();
+            }
         }
     }
 }
