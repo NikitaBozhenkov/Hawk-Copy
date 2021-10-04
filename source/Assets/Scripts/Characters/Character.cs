@@ -8,9 +8,9 @@ namespace Characters
     {
         [SerializeField] private Gun[] guns;
         [SerializeField] private float shotsPerSecond;
+
         private int framesPerShot;
         private int counter;
-
         private bool isAbleToShoot = false;
 
         private Action shoot;

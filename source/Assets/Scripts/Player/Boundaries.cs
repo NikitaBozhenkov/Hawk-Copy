@@ -6,26 +6,23 @@ namespace Player
 {
     public class Boundaries : MonoBehaviour
     {
-        private Camera _mainCamera;
-        private Transform _mainCameraTransform;
-        private float _cameraRotation;
-        private float _boundariesDistanceFromCamera;
-        private float _cameraSize;
+        private Camera mainCamera;
+        private Transform mainCameraTransform;
 
-        private float _screenBoundX;
-        private float _screenSizeX;
+        private float screenBoundX;
+        private float screenSizeX;
 
-        private float _objectWidth;
-        private float _objectHeight;
+        private float objectWidth;
+        private float objectHeight;
 
-        private float _lowerBound;
-        private float _upperBound;
+        private float lowerBound;
+        private float upperBound;
 
-        private Transform _objectTransform;
+        private Transform objectTransform;
 
         public void Setup(Camera mainCamera)
         {
-            _mainCamera = mainCamera;
+            this.mainCamera = mainCamera;
             CacheValues();
             CalculateScreenBounds();
         }
@@ -37,38 +34,38 @@ namespace Player
 
         private void CalculateScreenBounds()
         {
-            _screenSizeX = Constants.GameFieldSizeX;
-            _screenBoundX = _screenSizeX / 2;
+            screenSizeX = Constants.GameFieldSizeX;
+            screenBoundX = screenSizeX / 2;
 
-            float height = _mainCamera.transform.position.y - transform.position.y;
-            _lowerBound = Constants.GetGameFieldLowerBoundZ(height);
-            _upperBound = Constants.GetGameFieldUpperBoundZ(height);
+            float height = mainCamera.transform.position.y - transform.position.y;
+            lowerBound = Constants.GetGameFieldLowerBoundZ(height);
+            upperBound = Constants.GetGameFieldUpperBoundZ(height);
         }
 
         private void CacheValues()
         {
-            _objectWidth = transform.GetComponent<MeshRenderer>().bounds.extents.x;
-            _objectHeight = transform.GetComponent<MeshRenderer>().bounds.extents.z;
-            _mainCameraTransform = _mainCamera.transform;
-            _objectTransform = transform;
+            objectWidth = transform.GetComponent<MeshRenderer>().bounds.extents.x;
+            objectHeight = transform.GetComponent<MeshRenderer>().bounds.extents.z;
+            mainCameraTransform = mainCamera.transform;
+            objectTransform = transform;
         }
 
         private void Bound()
         {
-            float tempLower = _lowerBound;
-            float tempUpper = _upperBound;
+            float tempLower = lowerBound;
+            float tempUpper = upperBound;
 
-            float cameraOffset = _mainCameraTransform.position.z;
-            _lowerBound += cameraOffset;
-            _upperBound += cameraOffset;
+            float cameraOffset = mainCameraTransform.position.z;
+            lowerBound += cameraOffset;
+            upperBound += cameraOffset;
 
-            Vector3 viewPos = _objectTransform.position;
-            viewPos.x = Mathf.Clamp(viewPos.x, _screenBoundX - _screenSizeX + _objectWidth, _screenBoundX - _objectWidth);
-            viewPos.z = Mathf.Clamp(viewPos.z, _lowerBound + _objectHeight, _upperBound - _objectHeight);
-            _objectTransform.position = viewPos;
+            Vector3 viewPos = objectTransform.position;
+            viewPos.x = Mathf.Clamp(viewPos.x, screenBoundX - screenSizeX + objectWidth, screenBoundX - objectWidth);
+            viewPos.z = Mathf.Clamp(viewPos.z, lowerBound + objectHeight, upperBound - objectHeight);
+            objectTransform.position = viewPos;
 
-            _lowerBound = tempLower;
-            _upperBound = tempUpper;
+            lowerBound = tempLower;
+            upperBound = tempUpper;
         }
     }
 }
