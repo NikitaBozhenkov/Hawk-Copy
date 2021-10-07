@@ -9,6 +9,11 @@ namespace Damage
         [SerializeField] private float _damage;
         [SerializeField] private float _speed;
 
+        private void Start()
+        {
+            StartCoroutine(OnShot());
+        }
+
         public IEnumerator OnShot()
         {
             while (true)
@@ -26,6 +31,12 @@ namespace Damage
         public void DealDamage(IDamageTaking target)
         {
             target.TakeDamage(CalculateDamage());
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.CompareTag("GameField")) return;
+            Destroy(gameObject);
         }
     }
 }

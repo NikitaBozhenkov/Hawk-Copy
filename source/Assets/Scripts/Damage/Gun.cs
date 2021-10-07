@@ -1,30 +1,32 @@
 ﻿using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Damage
 {
-    public class Gun : MonoBehaviour
+    public class Gun
     {
-        [Header("Bullets Settings")]
-        [SerializeField] private Transform _bulletStartPosition;
-        [SerializeField] private Bullet[] _bulletPrefabs;
+        private readonly Transform bulletsRoot;
+        private readonly Bullet[] bulletPrefabs;
 
-        public void Setup(ref Action shootAction)
+        public Gun(Transform bulletsRoot, Bullet[] bulletPrefabs, ref Action shootAction)
         {
+            this.bulletsRoot = bulletsRoot;
+            this.bulletPrefabs = bulletPrefabs;
+
             shootAction += Shoot;
         }
 
         protected virtual Bullet ChooseBullet()
         {
-            return _bulletPrefabs[Random.Range(0, _bulletPrefabs.Length)];
+            return bulletPrefabs[Random.Range(0, bulletPrefabs.Length)];
         }
 
         protected virtual void Shoot()
         {
             Bullet bulletToShootPrefab = ChooseBullet();
-            Bullet shotBullet = Instantiate(bulletToShootPrefab, _bulletStartPosition.position, _bulletStartPosition.rotation);
-            StartCoroutine(shotBullet.OnShot());
+            Bullet shotBullet = Object.Instantiate(bulletToShootPrefab, bulletsRoot.position, bulletsRoot.rotation);
         }
     }
 }

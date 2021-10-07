@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Tools;
+using Configuration;
 using Damage;
 using UnityEngine;
 
@@ -6,35 +9,48 @@ namespace Characters
 {
     public class Character : MonoBehaviour
     {
-        [SerializeField] private Gun[] guns;
-        [SerializeField] private float shotsPerSecond;
+        [SerializeField] private GunConfig[] gunConfigs;
+        [SerializeField] private MeshRenderer meshRenderer;
+        [SerializeField] private bool isAbleToShootAtStart;
+        [SerializeField] private float maxHealth;
 
-        private int framesPerShot;
-        private int counter;
-        private bool isAbleToShoot = false;
+        private List<Gun> guns;
+        private List<Pair<int, int>> shootCounters;
+        private List<Action> shootActions;
+        private bool isAbleToShoot;     
 
-        private Action shoot;
+        public MeshRenderer MeshRenderer => meshRenderer;
 
         public void Setup()
         {
-            foreach (var gun in guns)
-            {
-                gun.Setup(ref shoot);
-            }
+            guns = new List<Gun>();
+            shootCounters = new List<Pair<int, int>>();
+            shootActions = new List<Action>();
+            isAbleToShoot = isAbleToShootAtStart;
 
-            framesPerShot = (int)(1 / (Time.fixedDeltaTime * shotsPerSecond));
-            counter = 0;
+            foreach (var gunConfig in gunConfigs)
+            {
+                Action action = delegate {  };
+
+                Gun gun = new Gun(transform, gunConfig.BulletPrefabs, ref action);
+
+                guns.Add(gun);
+                shootCounters.Add(new Pair<int, int>(
+                    0,
+                    (int) (1 / (Time.fixedDeltaTime * gunConfig.ShotsPerSecond)))
+                );
+                shootActions.Add(action);
+            }
         }
 
-        public void EnableShooting()
+        public virtual void EnableShooting()
         {
             isAbleToShoot = true;
         }
 
-        public void DisableShooting()
+        public virtual void DisableShooting()
         {
             isAbleToShoot = false;
-            counter = 0;
         }
 
         private void FixedUpdate()
@@ -43,12 +59,15 @@ namespace Characters
             CheckForShot();
         }
 
-        private void CheckForShot()
+        protected virtual void CheckForShot()
         {
-            ++counter;
-            if (counter != framesPerShot) return;
-            shoot?.Invoke();
-            counter = 0;
+            for (int i = 0; i < guns.Count; ++i)
+            {
+                ++shootCounters[i].First;
+                if (shootCounters[i].First != shootCounters[i].Second) continue;
+                shootActions[i]?.Invoke();
+                shootCounters[i].First = 0;
+            }
         }
     }
 }

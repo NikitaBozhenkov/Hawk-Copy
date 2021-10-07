@@ -8,23 +8,21 @@ namespace Player
 {
     public class Movement : MonoBehaviour
     {
-        private Touch _touch;
+        private Touch touch;
 
-        [SerializeField] private float _speed;
-        [SerializeField] private float _speedModifier;
+        [SerializeField] private float speedModifier;
 
         private void FixedUpdate()
         {   
             ProcessTouches(InputHelper.GetTouches());
-            transform.Translate(0, 0, _speed * Time.deltaTime);
         }
 
         private void ProcessTouches(List<Touch> touches)
         {
             if (touches.Count == 0) return;
-            _touch = touches[0];
+            touch = touches[0];
 
-            Move(_touch.deltaPosition * _speedModifier);
+            Move(touch.deltaPosition * speedModifier);
         }
 
         private void Move(Vector2 additionalPosition)

@@ -7,37 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2245239596994585043, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: _bulletPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245239596994585043, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: _bulletPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 6707560635963166230, guid: 71701ec61da83704d9d69aeec83771f4,
-        type: 3}
-    - target: {fileID: 3904145045154008821, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4880718410863309422, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: guns.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4880718410863309422, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: guns.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4880718410863309422, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: shotsPerSecond
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5347739831999445849, guid: dfa41b80ef141884990ec617c52164cf,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -98,25 +67,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5347739831999445851, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5347739831999445851, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5347739831999445855, guid: dfa41b80ef141884990ec617c52164cf,
         type: 3}
       propertyPath: m_Name
       value: StaticEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5510443649170088564, guid: dfa41b80ef141884990ec617c52164cf,
-        type: 3}
-      propertyPath: m_Name
-      value: Gun1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfa41b80ef141884990ec617c52164cf, type: 3}

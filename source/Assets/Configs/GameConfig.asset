@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04bf3d01a24ff914695ecb1e92bc0e0f, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  gameplayCameraConfig: {fileID: 11400000, guid: 93aeeb3189e45a04d8bf0d42f46a3ac0,
+    type: 2}
+  playerConfig: {fileID: 11400000, guid: 558d7559d6b6801439467536c65fed88, type: 2}
+  chunksConfig: {fileID: 11400000, guid: ec0a155d707bbc143a51612a408c1034, type: 2}
+  gameFieldRootPosition: {x: 0, y: 0, z: 0}
+  gameplayMovementSpeed: 1

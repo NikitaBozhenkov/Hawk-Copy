@@ -6,25 +6,19 @@ namespace Player
 {
     public class Boundaries : MonoBehaviour
     {
-        private Camera mainCamera;
-        private Transform mainCameraTransform;
-
-        private float screenBoundX;
-        private float screenSizeX;
-
+        private MeshRenderer objectMeshRenderer;
+        private Transform objectTransform;
         private float objectWidth;
         private float objectHeight;
+        private BoxCollider gameField;
+        private Transform gameFieldTransform;
+        private Vector3 gameFieldSize;
 
-        private float lowerBound;
-        private float upperBound;
-
-        private Transform objectTransform;
-
-        public void Setup(Camera mainCamera)
+        public void Setup(MeshRenderer objectMeshRenderer, BoxCollider gameField)
         {
-            this.mainCamera = mainCamera;
+            this.objectMeshRenderer = objectMeshRenderer;
+            this.gameField = gameField;
             CacheValues();
-            CalculateScreenBounds();
         }
 
         private void LateUpdate()
@@ -32,40 +26,29 @@ namespace Player
             Bound();
         }
 
-        private void CalculateScreenBounds()
-        {
-            screenSizeX = Constants.GameFieldSizeX;
-            screenBoundX = screenSizeX / 2;
-
-            float height = mainCamera.transform.position.y - transform.position.y;
-            lowerBound = Constants.GetGameFieldLowerBoundZ(height);
-            upperBound = Constants.GetGameFieldUpperBoundZ(height);
-        }
-
         private void CacheValues()
         {
-            objectWidth = transform.GetComponent<MeshRenderer>().bounds.extents.x;
-            objectHeight = transform.GetComponent<MeshRenderer>().bounds.extents.z;
-            mainCameraTransform = mainCamera.transform;
             objectTransform = transform;
+            objectWidth = objectMeshRenderer.bounds.extents.x;
+            objectHeight = objectMeshRenderer.bounds.extents.z;
+            gameFieldTransform = gameField.transform;
+            gameFieldSize = gameField.size;
         }
 
         private void Bound()
         {
-            float tempLower = lowerBound;
-            float tempUpper = upperBound;
+            Vector3 newPosition = objectTransform.position;
+            Vector3 gameFieldPosition = gameFieldTransform.position;
 
-            float cameraOffset = mainCameraTransform.position.z;
-            lowerBound += cameraOffset;
-            upperBound += cameraOffset;
-
-            Vector3 viewPos = objectTransform.position;
-            viewPos.x = Mathf.Clamp(viewPos.x, screenBoundX - screenSizeX + objectWidth, screenBoundX - objectWidth);
-            viewPos.z = Mathf.Clamp(viewPos.z, lowerBound + objectHeight, upperBound - objectHeight);
-            objectTransform.position = viewPos;
-
-            lowerBound = tempLower;
-            upperBound = tempUpper;
+            newPosition.x = Mathf.Clamp(
+                newPosition.x, 
+                gameFieldPosition.x - gameFieldSize.x / 2 + objectWidth,
+                gameFieldPosition.x + gameFieldSize.x / 2 - objectWidth);
+            newPosition.z = Mathf.Clamp(
+                newPosition.z, 
+                gameFieldPosition.z - gameFieldSize.z / 2 + objectHeight,
+                gameFieldPosition.z + gameFieldSize.z / 2 - objectHeight);
+            objectTransform.position = newPosition;
         }
     }
 }

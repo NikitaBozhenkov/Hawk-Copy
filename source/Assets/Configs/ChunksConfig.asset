@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7959bb650eeb16418598950aace79d5, type: 3}
+  m_Name: ChunksConfig
+  m_EditorClassIdentifier: 
+  startChunkPrefabs:
+  - {fileID: 8113605901261530121, guid: 264def14793841a4ebfed3f5434e9fa7, type: 3}
+  startChunksCount: 1
+  enemyChunkPrefabs:
+  - {fileID: 6539555305346232606, guid: ae8c3a723a7914c4a83c89cc97095429, type: 3}
+  - {fileID: 6539555305346232606, guid: 375169146426e964986e9721720b8b15, type: 3}
+  - {fileID: 6539555305346232606, guid: 75c71993a7dccf14c9999264281db6b0, type: 3}
+  enemyChunksCount: 1
+  finishChunkPrefabs:
+  - {fileID: 273326326696418860, guid: cd586d88cd48af348b70d8e532e6159a, type: 3}
+  finishChunksCount: 1
