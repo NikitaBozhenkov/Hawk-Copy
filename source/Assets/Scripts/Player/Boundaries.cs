@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player
 {
@@ -41,11 +39,11 @@ namespace Player
             Vector3 gameFieldPosition = gameFieldTransform.position;
 
             newPosition.x = Mathf.Clamp(
-                newPosition.x, 
+                newPosition.x,
                 gameFieldPosition.x - gameFieldSize.x / 2 + objectWidth,
                 gameFieldPosition.x + gameFieldSize.x / 2 - objectWidth);
             newPosition.z = Mathf.Clamp(
-                newPosition.z, 
+                newPosition.z,
                 gameFieldPosition.z - gameFieldSize.z / 2 + objectHeight,
                 gameFieldPosition.z + gameFieldSize.z / 2 - objectHeight);
             objectTransform.position = newPosition;

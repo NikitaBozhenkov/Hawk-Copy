@@ -1,10 +1,13 @@
 ﻿namespace Tools
 {
-    public class Pair<T, U> {
-        public Pair() {
+    public class Pair<T, U>
+    {
+        public Pair()
+        {
         }
 
-        public Pair(T first, U second) {
+        public Pair(T first, U second)
+        {
             this.First = first;
             this.Second = second;
         }

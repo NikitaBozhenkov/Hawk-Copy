@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4880718410863309422, guid: dfa41b80ef141884990ec617c52164cf,
+        type: 3}
+      propertyPath: maxHealth
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5347739831999445849, guid: dfa41b80ef141884990ec617c52164cf,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

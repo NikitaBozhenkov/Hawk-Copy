@@ -7,32 +7,36 @@ using UnityEngine;
 
 namespace Characters
 {
-    public class Character : MonoBehaviour
+    public class Character : MonoBehaviour, IDamageTaking
     {
         [SerializeField] private GunConfig[] gunConfigs;
         [SerializeField] private MeshRenderer meshRenderer;
         [SerializeField] private bool isAbleToShootAtStart;
         [SerializeField] private float maxHealth;
+        [SerializeField] private ObjectType objectType;
 
         private List<Gun> guns;
         private List<Pair<int, int>> shootCounters;
         private List<Action> shootActions;
-        private bool isAbleToShoot;     
+        private bool isAbleToShoot;
+        private float currentHealth;
 
         public MeshRenderer MeshRenderer => meshRenderer;
+        public ObjectType ObjectType => objectType;
 
-        public void Setup()
+        public void Setup(Transform bulletsRoot)
         {
             guns = new List<Gun>();
             shootCounters = new List<Pair<int, int>>();
             shootActions = new List<Action>();
             isAbleToShoot = isAbleToShootAtStart;
+            currentHealth = maxHealth;
 
-            foreach (var gunConfig in gunConfigs)
+            foreach (GunConfig gunConfig in gunConfigs)
             {
-                Action action = delegate {  };
+                Action action = delegate { };
 
-                Gun gun = new Gun(transform, gunConfig.BulletPrefabs, ref action);
+                Gun gun = new Gun(bulletsRoot, transform, gunConfig.BulletPrefabs, objectType, ref action);
 
                 guns.Add(gun);
                 shootCounters.Add(new Pair<int, int>(
@@ -68,6 +72,12 @@ namespace Characters
                 shootActions[i]?.Invoke();
                 shootCounters[i].First = 0;
             }
+        }
+
+        public void TakeDamage(float value)
+        {
+            currentHealth -= value;
+            if (currentHealth < 0) Destroy(gameObject);
         }
     }
 }

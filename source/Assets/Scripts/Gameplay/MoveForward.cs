@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Characters
+namespace Gameplay
 {
     public class MoveForward : MonoBehaviour
     {

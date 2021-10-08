@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameplayCameraConfig: {fileID: 11400000, guid: 93aeeb3189e45a04d8bf0d42f46a3ac0,
     type: 2}
+  gameplayUI: {fileID: 1441423339705829641, guid: 057c3da8784178b40ae9bf5aa401ded3,
+    type: 3}
+  screensConfig: {fileID: 11400000, guid: c1ed7e4515a7000469f6699719336b2d, type: 2}
   playerConfig: {fileID: 11400000, guid: 558d7559d6b6801439467536c65fed88, type: 2}
   chunksConfig: {fileID: 11400000, guid: ec0a155d707bbc143a51612a408c1034, type: 2}
   gameFieldRootPosition: {x: 0, y: 0, z: 0}

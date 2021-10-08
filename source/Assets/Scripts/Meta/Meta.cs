@@ -1,32 +1,65 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Characters;
-using Chunks;
 using Configuration;
-using TMPro;
+using Gameplay;
+using Screens;
 using UnityEngine;
 
-public class Meta : MonoBehaviour
+namespace Meta
 {
-    [SerializeField] private GameConfig gameConfig;
-    private Game game;
-
-    [Header("Main Menu Settings")] 
-    [SerializeField] private Canvas mainMenuCanvas;
-
-    private Action<GameStatus> gameStatusChanged;
-
-    private void Start()
+    public class Meta : MonoBehaviour
     {
-        game = new GameObject("game").AddComponent<Game>();
-        game.Setup(gameConfig);
-        game.StartGame();
-    }
+        [SerializeField] private GameConfig gameConfig;
 
-    private void FinishGame()
-    {
-        mainMenuCanvas.gameObject.SetActive(true);
+        private Game game;
+        private ScreenManager screenManager;
+        private GameStatus currentGameStatus;
+
+        public GameStatus CurrentGameStatus
+        {
+            get => currentGameStatus;
+            private set
+            {
+                currentGameStatus = value;
+                gameStatusChanged?.Invoke(currentGameStatus);
+            }
+        }
+
+        private Action<GameStatus> gameStatusChanged;
+
+        private void Start()
+        {
+            screenManager = new ScreenManager(gameConfig.ScreensConfig, GameStatus.InMenu, ref gameStatusChanged);
+            screenManager.GameplayStarted += StartGame;
+            screenManager.FinishStatusConfirmed += () =>
+            {
+                if (CurrentGameStatus == GameStatus.LevelFinished)
+                {
+                    GameStats.IncreaseFinishedLevelsByOne();
+                }
+
+                CurrentGameStatus = GameStatus.InMenu;
+            };
+        }
+
+        private void SetupGame()
+        {
+            game = new GameObject("game").AddComponent<Game>();
+            game.Setup(gameConfig, GameStats.GetFinishedLevels() + 1);
+            game.GameFinished += OnGameFinished;
+        }
+
+        private void StartGame()
+        {
+            SetupGame();
+            CurrentGameStatus = GameStatus.InGame;
+            game.StartGame();
+        }
+
+        private void OnGameFinished(GameResultStatus result)
+        {
+            CurrentGameStatus = (result == GameResultStatus.Success)
+                ? GameStatus.LevelFinished
+                : GameStatus.LevelFailed;
+        }
     }
 }

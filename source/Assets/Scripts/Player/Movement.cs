@@ -1,28 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Tools;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player
 {
     public class Movement : MonoBehaviour
     {
-        private Touch touch;
-
         [SerializeField] private float speedModifier;
+        [SerializeField] private Joystick joystick;
 
         private void FixedUpdate()
-        {   
-            ProcessTouches(InputHelper.GetTouches());
-        }
-
-        private void ProcessTouches(List<Touch> touches)
         {
-            if (touches.Count == 0) return;
-            touch = touches[0];
-
-            Move(touch.deltaPosition * speedModifier);
+            Move(joystick.MoveDelta * speedModifier);
         }
 
         private void Move(Vector2 additionalPosition)
@@ -32,6 +19,5 @@ namespace Player
             newPosition.z += additionalPosition.y;
             transform.position = newPosition;
         }
-
     }
 }

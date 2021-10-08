@@ -671,13 +671,14 @@ GameObject:
   - component: {fileID: 2173619115430465832}
   - component: {fileID: 4050472624062258593}
   - component: {fileID: 7399903687481295581}
+  - component: {fileID: 7021831625852409622}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7992866407364338217
 RectTransform:
   m_ObjectHideFlags: 0
@@ -758,3 +759,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7021831625852409622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8652646081090197178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba2dc7a646fab74e9389ceb2ffc4a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 2173619115430465832}
+  distanceFromCamera: 10
+  levelsFinished: {fileID: 7097384344639158269}
+  startButton: {fileID: 2685736156570619152}

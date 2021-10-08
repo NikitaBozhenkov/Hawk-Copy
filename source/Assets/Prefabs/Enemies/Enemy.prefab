@@ -111,6 +111,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe2c0b835e20e594b9e2ce17e072521b, type: 2}
   meshRenderer: {fileID: 5347739831999445849}
   isAbleToShootAtStart: 0
+  maxHealth: 0
+  objectType: 1
 --- !u!114 &6607512204780107935
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Characters
 {
@@ -17,8 +15,9 @@ namespace Characters
             wasEnabled = true;
         }
 
-        private void OnTriggerExit(Collider other) {
-            if(!other.gameObject.CompareTag("GameField") || !wasEnabled) return;
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.gameObject.CompareTag("GameField") || !wasEnabled) return;
             character.DisableShooting();
         }
     }

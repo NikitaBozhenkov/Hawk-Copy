@@ -8,12 +8,17 @@ namespace Damage
     public class Gun
     {
         private readonly Transform bulletsRoot;
+        private readonly Transform bulletsStartRoot;
         private readonly Bullet[] bulletPrefabs;
+        private readonly ObjectType objectType;
 
-        public Gun(Transform bulletsRoot, Bullet[] bulletPrefabs, ref Action shootAction)
+        public Gun(Transform bulletsRoot, Transform bulletsStartRoot, Bullet[] bulletPrefabs, ObjectType objectType,
+            ref Action shootAction)
         {
             this.bulletsRoot = bulletsRoot;
+            this.bulletsStartRoot = bulletsStartRoot;
             this.bulletPrefabs = bulletPrefabs;
+            this.objectType = objectType;
 
             shootAction += Shoot;
         }
@@ -26,7 +31,10 @@ namespace Damage
         protected virtual void Shoot()
         {
             Bullet bulletToShootPrefab = ChooseBullet();
-            Bullet shotBullet = Object.Instantiate(bulletToShootPrefab, bulletsRoot.position, bulletsRoot.rotation);
+            Bullet shotBullet =
+                Object.Instantiate(bulletToShootPrefab, bulletsStartRoot.position, bulletsStartRoot.rotation);
+            shotBullet.transform.SetParent(bulletsRoot);
+            shotBullet.Setup(objectType);
         }
     }
 }

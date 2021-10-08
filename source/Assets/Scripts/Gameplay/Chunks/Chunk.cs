@@ -8,11 +8,11 @@ namespace Chunks
     {
         [SerializeField] private Character[] enemies;
 
-        public void Setup()
+        public void Setup(Transform bulletsRoot)
         {
             foreach (Character enemy in enemies)
             {
-                enemy.Setup();
+                enemy.Setup(bulletsRoot);
             }
         }
     }
