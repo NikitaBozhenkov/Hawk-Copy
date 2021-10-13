@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Configuration;
-using Gameplay;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -73,21 +71,6 @@ namespace Chunks
             foreach (Chunk chunk in chunks)
             {
                 chunk.Setup(bulletsRoot);
-            }
-        }
-
-        private void OnGameStatusChanged(GameStatus newGameStatus)
-        {
-            switch (newGameStatus)
-            {
-                case GameStatus.InMenu:
-                    Debug.Log("status changed to: inMenu");
-                    break;
-                case GameStatus.InGame:
-                    Debug.Log("status changed to: inGame");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(newGameStatus), newGameStatus, null);
             }
         }
     }

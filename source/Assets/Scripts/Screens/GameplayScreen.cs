@@ -5,21 +5,16 @@ using UnityEngine.UI;
 
 namespace Screens
 {
-    public class GameplayUI : MonoBehaviour
+    public class GameplayScreen : BaseScreen
     {
-        [SerializeField] private Canvas canvas;
-        [SerializeField] private float distanceFromCamera;
         [SerializeField] private Image progressScale;
         [SerializeField] private Image progressScaleFinishedPart;
         [SerializeField] private TextMeshProUGUI levelNumber;
 
         private float scaleLength;
 
-        public void Setup(Camera camera, int levelNumber)
+        public void Setup(int levelNumber)
         {
-            transform.SetParent(camera.transform);
-            canvas.worldCamera = camera;
-            canvas.planeDistance = distanceFromCamera;
             this.levelNumber.text = levelNumber.ToString();
             scaleLength = progressScale.rectTransform.rect.width;
             SetLevelProgress(0);

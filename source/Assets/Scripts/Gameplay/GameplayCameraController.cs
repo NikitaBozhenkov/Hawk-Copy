@@ -7,16 +7,11 @@ namespace Gameplay
     {
         private readonly GameplayCameraConfig config;
 
-        public Camera Camera { get; private set; }
+        public Camera Camera { get; set; }
 
         public GameplayCameraController(GameplayCameraConfig config)
         {
             this.config = config;
-        }
-
-        public void CreateCamera()
-        {
-            Camera = new GameObject("gameplayCamera").AddComponent<Camera>();
         }
 
         public void SetupCamera(Transform parent)

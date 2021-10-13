@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cde456d83ba434da8e67ed4a326682, type: 3}
   m_Name: LevelFinishMenuConfig
   m_EditorClassIdentifier: 
-  levelFinishMenu: {fileID: 4503041053952559047, guid: 1091606b5f1a30c4f93b1ed7fcf95db9,
+  _levelFinishScreen: {fileID: 4537978816757883553, guid: f1ccc7e343bbae647a5c6e462d3425a1,
     type: 3}
   levelFailText: Level failed
   levelSuccessText: Level succeed

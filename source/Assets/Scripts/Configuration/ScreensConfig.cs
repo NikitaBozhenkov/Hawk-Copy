@@ -6,10 +6,12 @@ namespace Configuration
     [CreateAssetMenu(fileName = "ScreensConfig", menuName = "ScreensConfig", order = 3)]
     public class ScreensConfig : ScriptableObject
     {
-        [SerializeField] private MainMenu mainMenu;
+        [SerializeField] private MainMenuScreen mainMenuScreen;
+        [SerializeField] private GameplayScreen gameplayScreen;
         [SerializeField] private LevelFinishMenuConfig levelFinishMenuConfig;
 
-        public MainMenu MainMenu => mainMenu;
+        public MainMenuScreen MainMenuScreen => mainMenuScreen;
+        public GameplayScreen GameplayScreen => gameplayScreen;
         public LevelFinishMenuConfig LevelFinishMenuConfig => levelFinishMenuConfig;
     }
 }

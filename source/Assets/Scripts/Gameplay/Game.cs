@@ -16,22 +16,21 @@ namespace Gameplay
         private ChunksManager chunksManager;
         private Character player;
         private BoxCollider gameFieldCollider;
-        private GameplayCameraController gameplayCameraController;
+        private Camera gameplayCamera;
 
         private float gameLength;
         private Transform bulletsRoot;
 
         private Transform gameFieldRoot;
-        private GameplayUI gameplayUI;
-
-        private int levelNumber;
+        private GameplayScreen gameplayScreen;
 
         public event Action<GameResultStatus> GameFinished;
 
-        public void Setup(GameConfig gameConfig, int levelNumber = 0)
+        public void Setup(GameConfig gameConfig, Camera gameplayCamera, GameplayScreen gameplayScreen)
         {
             this.gameConfig = gameConfig;
-            this.levelNumber = levelNumber;
+            this.gameplayCamera = gameplayCamera;
+            this.gameplayScreen = gameplayScreen;
         }
 
         public void StartGame()
@@ -47,13 +46,14 @@ namespace Gameplay
 
         public void FinishGame(GameResultStatus result)
         {
+            gameplayCamera.transform.SetParent(null);
             GameFinished?.Invoke(result);
             Destroy(gameObject);
         }
 
         private IEnumerator ProgressCounter()
         {
-            Transform gameplayCameraTransform = gameplayCameraController.Camera.transform;
+            Transform gameplayCameraTransform = gameplayCamera.transform;
             float startPosition = gameplayCameraTransform.position.z;
             while (true)
             {
@@ -63,7 +63,7 @@ namespace Gameplay
                 }
 
                 float finishedPart = (gameplayCameraTransform.position.z - startPosition) / gameLength;
-                gameplayUI.SetLevelProgress(finishedPart);
+                gameplayScreen.SetLevelProgress(finishedPart);
                 if (finishedPart < 1)
                 {
                     yield return null;
@@ -81,20 +81,13 @@ namespace Gameplay
         {
             CreateGameFieldRoot();
             CreateBulletsRoot();
-            CreateGameplayCamera();
-            CreateGameplayUI();
-            Rect gameField = ProjectionCalculator.GetCameraProjectionOnPlaneXZ(gameplayCameraController.Camera,
-                gameplayCameraController.Camera.transform.position.y - gameFieldRoot.position.y);
+            SetupCamera(gameFieldRoot);
+            Rect gameField = ProjectionCalculator.GetCameraProjectionOnPlaneXZ(gameplayCamera,
+                gameplayCamera.transform.position.y - gameFieldRoot.position.y);
             CreateGameFieldCollider(gameField);
             CreatePlayer(gameField);
             CreateChunks(gameField);
             gameLength = chunksManager.GetGameLength();
-        }
-
-        private void CreateGameplayUI()
-        {
-            gameplayUI = Instantiate(gameConfig.GameplayUI);
-            gameplayUI.Setup(gameplayCameraController.Camera, levelNumber);
         }
 
         private void CreateChunks(Rect gameField)
@@ -103,11 +96,12 @@ namespace Gameplay
             chunksManager.MakeSpawns(bulletsRoot);
         }
 
-        private void CreateGameplayCamera()
-        {
-            gameplayCameraController = new GameplayCameraController(gameConfig.GameplayCameraConfig);
-            gameplayCameraController.CreateCamera();
-            gameplayCameraController.SetupCamera(gameFieldRoot);
+        public void SetupCamera(Transform parent) {
+            gameplayCamera.transform.position = new Vector3(0, gameConfig.GameplayCameraConfig.PositionY, 0);
+            gameplayCamera.transform.rotation = Quaternion.Euler(gameConfig.GameplayCameraConfig.AngularRotationX, 0, 0);
+            gameplayCamera.transform.parent = parent;
+            gameplayCamera.orthographic = gameConfig.GameplayCameraConfig.IsOrthographic;
+            gameplayCamera.orthographicSize = gameConfig.GameplayCameraConfig.OrthographicSize;
         }
 
         private void CreateGameFieldRoot()
