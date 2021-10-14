@@ -14,6 +14,7 @@ namespace Characters
         [SerializeField] private bool isAbleToShootAtStart;
         [SerializeField] private float maxHealth;
         [SerializeField] private ObjectType objectType;
+        [SerializeField] private HealthBar healthBar;
 
         private List<Gun> guns;
         private List<Pair<int, int>> shootCounters;
@@ -77,6 +78,7 @@ namespace Characters
         public void TakeDamage(float value)
         {
             currentHealth -= value;
+            healthBar.SetHpPart(currentHealth / maxHealth);
             if (currentHealth < 0) Destroy(gameObject);
         }
     }

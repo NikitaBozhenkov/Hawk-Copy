@@ -16,26 +16,17 @@ namespace Meta
 
         private Game game;
         private ScreenManager screenManager;
-        private GameStatus currentGameStatus;
         private MainMenuScreen mainMenuScreen;
+        private bool wasMainMenuSet;
         private GameplayScreen gameplayScreen;
         private LevelFinishScreen levelFinishScreen;
-
-        public GameStatus CurrentGameStatus
-        {
-            get => currentGameStatus;
-            private set
-            {
-                currentGameStatus = value;
-                gameStatusChanged?.Invoke(currentGameStatus);
-            }
-        }
-
-        private Action<GameStatus> gameStatusChanged;
+        private bool wasLevelFinishMenuSet;
 
         private void Start()
         {
             screenManager = new ScreenManager(gameConfig.ScreensConfig, uiCanvas);
+            wasMainMenuSet = false;
+            wasLevelFinishMenuSet = false;
             ChangeToScreen(GameStatus.InMenu);
         }
 
@@ -44,26 +35,38 @@ namespace Meta
             switch (status)
             {
                 case GameStatus.InMenu:
-                    mainMenuScreen = ((MainMenuScreen)screenManager.ShowScreen(ScreenType.MainMenu));
-                    mainMenuScreen.GameStarted -= StartGame;
-                    mainMenuScreen.GameStarted += StartGame;
-                    mainMenuScreen.Setup(GameStats.GetFinishedLevels());
+                    mainMenuScreen = ((MainMenuScreen) screenManager.ShowScreen(ScreenType.MainMenu));
+                    if (!wasMainMenuSet)
+                    {
+                        mainMenuScreen.GameStarted += StartGame;
+                        mainMenuScreen.Setup(GameStats.GetFinishedLevels());
+                        wasMainMenuSet = true;
+                    }
+                    mainMenuScreen.SetFinishedLevels(GameStats.GetFinishedLevels());
                     break;
                 case GameStatus.InGame:
-                    gameplayScreen = ((GameplayScreen)screenManager.ShowScreen(ScreenType.Gameplay));
+                    gameplayScreen = ((GameplayScreen) screenManager.ShowScreen(ScreenType.Gameplay));
                     gameplayScreen.Setup(GameStats.GetFinishedLevels() + 1);
                     break;
                 case GameStatus.LevelFailed:
-                    levelFinishScreen = ((LevelFinishScreen)screenManager.ShowScreen(ScreenType.LevelFinish));
-                    levelFinishScreen.StatusConfirmed -= OpenMainMenu;
-                    levelFinishScreen.StatusConfirmed += OpenMainMenu;
-                    levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelFailText);
+                    levelFinishScreen = ((LevelFinishScreen) screenManager.ShowScreen(ScreenType.LevelFinish));
+                    if (!wasLevelFinishMenuSet)
+                    {
+                        levelFinishScreen.StatusConfirmed += OpenMainMenu;
+                        levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelFailText);
+                        wasLevelFinishMenuSet = true;
+                    }
+
                     break;
                 case GameStatus.LevelFinished:
-                    levelFinishScreen = ((LevelFinishScreen)screenManager.ShowScreen(ScreenType.LevelFinish));
-                    levelFinishScreen.StatusConfirmed -= OpenMainMenu;
-                    levelFinishScreen.StatusConfirmed += OpenMainMenu;
-                    levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelSuccessText);
+                    levelFinishScreen = ((LevelFinishScreen) screenManager.ShowScreen(ScreenType.LevelFinish));
+                    if (!wasLevelFinishMenuSet)
+                    {
+                        levelFinishScreen.StatusConfirmed += OpenMainMenu;
+                        levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelSuccessText);
+                        wasLevelFinishMenuSet = true;
+                    }
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, null);
@@ -86,7 +89,6 @@ namespace Meta
         private void StartGame()
         {
             SetupGame();
-            CurrentGameStatus = GameStatus.InGame;
             game.StartGame();
         }
 
