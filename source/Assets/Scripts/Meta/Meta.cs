@@ -17,16 +17,12 @@ namespace Meta
         private Game game;
         private ScreenManager screenManager;
         private MainMenuScreen mainMenuScreen;
-        private bool wasMainMenuSet;
         private GameplayScreen gameplayScreen;
         private LevelFinishScreen levelFinishScreen;
-        private bool wasLevelFinishMenuSet;
 
         private void Start()
         {
             screenManager = new ScreenManager(gameConfig.ScreensConfig, uiCanvas);
-            wasMainMenuSet = false;
-            wasLevelFinishMenuSet = false;
             ChangeToScreen(GameStatus.InMenu);
         }
 
@@ -36,13 +32,9 @@ namespace Meta
             {
                 case GameStatus.InMenu:
                     mainMenuScreen = ((MainMenuScreen) screenManager.ShowScreen(ScreenType.MainMenu));
-                    if (!wasMainMenuSet)
-                    {
-                        mainMenuScreen.GameStarted += StartGame;
-                        mainMenuScreen.Setup(GameStats.GetFinishedLevels());
-                        wasMainMenuSet = true;
-                    }
-                    mainMenuScreen.SetFinishedLevels(GameStats.GetFinishedLevels());
+                    mainMenuScreen.GameStarted -= StartGame;
+                    mainMenuScreen.GameStarted += StartGame;
+                    mainMenuScreen.Setup(GameStats.GetFinishedLevels());
                     break;
                 case GameStatus.InGame:
                     gameplayScreen = ((GameplayScreen) screenManager.ShowScreen(ScreenType.Gameplay));
@@ -50,23 +42,16 @@ namespace Meta
                     break;
                 case GameStatus.LevelFailed:
                     levelFinishScreen = ((LevelFinishScreen) screenManager.ShowScreen(ScreenType.LevelFinish));
-                    if (!wasLevelFinishMenuSet)
-                    {
-                        levelFinishScreen.StatusConfirmed += OpenMainMenu;
-                        levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelFailText);
-                        wasLevelFinishMenuSet = true;
-                    }
+                    levelFinishScreen.StatusConfirmed -= OpenMainMenu;
+                    levelFinishScreen.StatusConfirmed += OpenMainMenu;
+                    levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelFailText);
 
                     break;
                 case GameStatus.LevelFinished:
                     levelFinishScreen = ((LevelFinishScreen) screenManager.ShowScreen(ScreenType.LevelFinish));
-                    if (!wasLevelFinishMenuSet)
-                    {
-                        levelFinishScreen.StatusConfirmed += OpenMainMenu;
-                        levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelSuccessText);
-                        wasLevelFinishMenuSet = true;
-                    }
-
+                    levelFinishScreen.StatusConfirmed -= OpenMainMenu;
+                    levelFinishScreen.StatusConfirmed += OpenMainMenu;
+                    levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelSuccessText);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, null);

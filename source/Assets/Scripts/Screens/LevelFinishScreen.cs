@@ -18,6 +18,10 @@ namespace Screens
             confirmStatusButton.onClick.AddListener(StatusConfirmed);
         }
 
+        private void OnDisable() {
+            confirmStatusButton.onClick.RemoveAllListeners();
+        }
+
         public void SetLevelResult(string value)
         {
             levelResult.text = value;

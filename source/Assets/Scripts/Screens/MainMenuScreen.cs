@@ -18,6 +18,11 @@ namespace Screens
             startButton.onClick.AddListener(GameStarted);
         }
 
+        private void OnDisable()
+        {
+            startButton.onClick.RemoveAllListeners();
+        }
+
         public void SetFinishedLevels(int value)
         {
             levelsFinished.text = value.ToString();
