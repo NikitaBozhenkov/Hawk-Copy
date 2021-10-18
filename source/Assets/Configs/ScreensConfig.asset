@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9503cadf0ede54f84f8a002bc1978d, type: 3}
   m_Name: ScreensConfig
   m_EditorClassIdentifier: 
-  mainMenuScreen: {fileID: 2549744474109309912, guid: 6c78bbbbfc26d644e9c54281cf6d5ff1,
-    type: 3}
-  gameplayScreen: {fileID: 7814821090450058780, guid: 12be9c40142bb6749bda68363e9dff61,
-    type: 3}
-  levelFinishMenuConfig: {fileID: 11400000, guid: 1da66d713ef42eb48968ba9c842d9c7f,
-    type: 2}
+  screens:
+  - {fileID: 7814821090450058780, guid: 12be9c40142bb6749bda68363e9dff61, type: 3}
+  - {fileID: 4537978816757883553, guid: f1ccc7e343bbae647a5c6e462d3425a1, type: 3}
+  - {fileID: 2549744474109309912, guid: 6c78bbbbfc26d644e9c54281cf6d5ff1, type: 3}

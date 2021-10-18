@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06cde456d83ba434da8e67ed4a326682, type: 3}
-  m_Name: LevelFinishMenuConfig
+  m_Script: {fileID: 11500000, guid: 251c5590ca1d1a44a8c8d54ac270e2b6, type: 3}
+  m_Name: EnemyGunConfig
   m_EditorClassIdentifier: 
-  _levelFinishScreen: {fileID: 4537978816757883553, guid: f1ccc7e343bbae647a5c6e462d3425a1,
-    type: 3}
-  levelFailText: Level failed
-  levelSuccessText: Level succeed
+  shotsPerSecond: 4
+  bulletPrefabs:
+  - {fileID: 6707560635963166230, guid: e71e76e02b2fb2c47a03f0f4082f0f1f, type: 3}

@@ -19,7 +19,7 @@ MonoBehaviour:
   - {fileID: 6539555305346232606, guid: ae8c3a723a7914c4a83c89cc97095429, type: 3}
   - {fileID: 6539555305346232606, guid: 375169146426e964986e9721720b8b15, type: 3}
   - {fileID: 6539555305346232606, guid: 75c71993a7dccf14c9999264281db6b0, type: 3}
-  enemyChunksCount: 1
+  enemyChunksCount: 3
   finishChunkPrefabs:
   - {fileID: 273326326696418860, guid: cd586d88cd48af348b70d8e532e6159a, type: 3}
   finishChunksCount: 1

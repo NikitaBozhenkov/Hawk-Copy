@@ -9,7 +9,6 @@ namespace Configuration
     public class GameConfig : ScriptableObject
     {
         [SerializeField] private GameplayCameraConfig gameplayCameraConfig;
-        [SerializeField] private GameplayScreen gameplayScreen;
         [SerializeField] private ScreensConfig screensConfig;
         [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private ChunksConfig chunksConfig;
@@ -17,7 +16,6 @@ namespace Configuration
         [SerializeField] private float gameplayMovementSpeed;
 
         public GameplayCameraConfig GameplayCameraConfig => gameplayCameraConfig;
-        public GameplayScreen GameplayScreen => gameplayScreen;
         public ScreensConfig ScreensConfig => screensConfig;
         public PlayerConfig PlayerConfig => playerConfig;
         public ChunksConfig ChunksConfig => chunksConfig;

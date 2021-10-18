@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Gameplay;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -7,24 +8,35 @@ namespace Screens
 {
     public class LevelFinishScreen : BaseScreen
     {
-        [SerializeField] private TextMeshProUGUI levelResult;
+        [SerializeField] private TextMeshProUGUI winText;
+        [SerializeField] private TextMeshProUGUI loseText;
         [SerializeField] private Button confirmStatusButton;
 
         public event UnityAction StatusConfirmed;
 
-        public void Setup(string levelResult)
+        public void Setup(GameResultStatus gameResult)
         {
-            SetLevelResult(levelResult);
+            SetLevelResult(gameResult);
             confirmStatusButton.onClick.AddListener(StatusConfirmed);
         }
 
-        private void OnDisable() {
-            confirmStatusButton.onClick.RemoveAllListeners();
+        public void SetLevelResult(GameResultStatus result)
+        {
+            if (result == GameResultStatus.Success)
+            {
+                winText.gameObject.SetActive(true);
+                loseText.gameObject.SetActive(false);
+            }
+            else
+            {
+                winText.gameObject.SetActive(false);
+                loseText.gameObject.SetActive(true);
+            }
         }
 
-        public void SetLevelResult(string value)
+        private void OnDisable()
         {
-            levelResult.text = value;
+            confirmStatusButton.onClick.RemoveAllListeners();
         }
     }
 }

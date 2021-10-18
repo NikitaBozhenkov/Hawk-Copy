@@ -31,27 +31,26 @@ namespace Meta
             switch (status)
             {
                 case GameStatus.InMenu:
-                    mainMenuScreen = ((MainMenuScreen) screenManager.ShowScreen(ScreenType.MainMenu));
+                    mainMenuScreen = ((MainMenuScreen) screenManager.ShowScreen<MainMenuScreen>());
                     mainMenuScreen.GameStarted -= StartGame;
                     mainMenuScreen.GameStarted += StartGame;
                     mainMenuScreen.Setup(GameStats.GetFinishedLevels());
                     break;
                 case GameStatus.InGame:
-                    gameplayScreen = ((GameplayScreen) screenManager.ShowScreen(ScreenType.Gameplay));
+                    gameplayScreen = ((GameplayScreen) screenManager.ShowScreen<GameplayScreen>());
                     gameplayScreen.Setup(GameStats.GetFinishedLevels() + 1);
                     break;
                 case GameStatus.LevelFailed:
-                    levelFinishScreen = ((LevelFinishScreen) screenManager.ShowScreen(ScreenType.LevelFinish));
+                    levelFinishScreen = ((LevelFinishScreen) screenManager.ShowScreen<LevelFinishScreen>());
                     levelFinishScreen.StatusConfirmed -= OpenMainMenu;
                     levelFinishScreen.StatusConfirmed += OpenMainMenu;
-                    levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelFailText);
-
+                    levelFinishScreen.Setup(GameResultStatus.Fail);
                     break;
                 case GameStatus.LevelFinished:
-                    levelFinishScreen = ((LevelFinishScreen) screenManager.ShowScreen(ScreenType.LevelFinish));
+                    levelFinishScreen = ((LevelFinishScreen) screenManager.ShowScreen<LevelFinishScreen>());
                     levelFinishScreen.StatusConfirmed -= OpenMainMenu;
                     levelFinishScreen.StatusConfirmed += OpenMainMenu;
-                    levelFinishScreen.Setup(gameConfig.ScreensConfig.LevelFinishMenuConfig.LevelSuccessText);
+                    levelFinishScreen.Setup(GameResultStatus.Success);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, null);
